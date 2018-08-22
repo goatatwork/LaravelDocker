@@ -10,8 +10,7 @@ services:
     volumes:
       - ../:/var/www/html
     ports:
-      - target: 80
-        published: ${WEB_PORT:-8010}
+      - ${WEB_PORT:-8010}:80
     networks:
       - laravel
     depends_on:
@@ -55,8 +54,7 @@ services:
     networks:
       - laravel
     ports:
-      - target: 9000
-        published: ${PORTAINER_PORT:-9001}
+      - ${PORTAINER_PORT:-9001}:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   horizon:
