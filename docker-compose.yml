@@ -5,7 +5,7 @@ services:
     build:
       context: ./docker/nginx
       dockerfile: Dockerfile
-    image: laravel/nginx:production
+    image: ${BASE_TAG:-laravel}/nginx:production
     volumes:
       - ./:/var/www/html
     ports:
@@ -18,7 +18,7 @@ services:
     build:
       context: ./docker/php
       dockerfile: Dockerfile
-    image: laravel/php-fpm:production
+    image: ${BASE_TAG:-laravel}/php-fpm:production
     volumes:
       - ./:/var/www/html
     networks:
@@ -31,7 +31,7 @@ services:
     build:
       context: ./docker/mysql
       dockerfile: Dockerfile
-    image: laravel/mysql:production
+    image: ${BASE_TAG:-laravel}/mysql:production
     volumes:
       - ./database/mysql:/var/lib/mysql
     environment:
@@ -39,7 +39,7 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - TZ=${TZ}
+      - TZ=${TZ:-America/Chicago}
     networks:
       - laravel
   portainer:
@@ -56,7 +56,7 @@ services:
     build:
       context: ./docker/horizon
       dockerfile: Dockerfile
-    image: laravel/horizon:production
+    image: ${BASE_TAG:-laravel}/horizon:production
     volumes:
       - ./:/var/www/html
     networks:
@@ -65,7 +65,7 @@ services:
     build:
       context: ./docker/cron
       dockerfile: Dockerfile
-    image: laravel/cron:production
+    image: ${BASE_TAG:-laravel}/cron:production
     volumes:
       - ./:/var/www/html
       - /tmp:/tmp
@@ -73,7 +73,7 @@ services:
     build:
       context: ./docker/node
       dockerfile: Dockerfile
-    image: laravel/node:production
+    image: ${BASE_TAG:-laravel}/node:production
     volumes:
       - ./:/var/www/html
 networks:
