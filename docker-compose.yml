@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    image: lg1/nginx:production
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8010:80"
+    networks:
+      - lg1
+    depends_on:
+      - php
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    image: lg1/php-fpm:production
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - lg1
+  redis:
+    image: redis:alpine
+    networks:
+      - lg1
+  mysql:
+    build:
+      context: ./docker/mysql
+      dockerfile: Dockerfile
+    image: lg1/mysql:production
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - TZ=${TZ}
+    networks:
+      - lg1
+  portainer:
+    image: portainer/portainer
+    container_name: "lg1_portainer"
+    command: --templates http://templates/templates.json --host=unix:///var/run/docker.sock
+    networks:
+      - lg1
+    ports:
+      - "9001:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  horizon:
+    build:
+      context: ./docker/horizon
+      dockerfile: Dockerfile
+    image: lg1/horizon:production
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - lg1
+  cron:
+    build:
+      context: ./docker/cron
+      dockerfile: Dockerfile
+    image: lg1/cron:production
+    volumes:
+      - ./:/var/www/html
+      - /tmp:/tmp
+  node:
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+    image: lg1/node:production
+    volumes:
+      - ./:/var/www/html
+networks:
+  lg1:
+    driver: "bridge"

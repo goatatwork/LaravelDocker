@@ -1,0 +1,13 @@
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# * * * * * www-data php /share/artisan schedule:run 1>> /dev/null 2>&1
+#* * * * * www-data /usr/bin/php /var/www/html/artisan schedule:run >> /var/log/cron.log 2>&1
+* * * * * root /script.sh > /proc/1/fd/1 2>/proc/1/fd/2
+#
