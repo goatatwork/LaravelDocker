@@ -2,12 +2,13 @@ version: '3'
 
 services:
   nginx:
+    env_file: ../.env
     build:
-      context: ./docker/nginx
+      context: nginx
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/nginx:production
     volumes:
-      - ./:/var/www/html
+      - ../:/var/www/html
     ports:
       - "8010:80"
     networks:
@@ -15,21 +16,24 @@ services:
     depends_on:
       - php
   php:
+    env_file: ../.env
     build:
-      context: ./docker/php
+      context: php
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/php-fpm:production
     volumes:
-      - ./:/var/www/html
+      - ../:/var/www/html
     networks:
       - laravel
   redis:
+    env_file: ../.env
     image: redis:alpine
     networks:
       - laravel
   mysql:
+    env_file: ../.env
     build:
-      context: ./docker/mysql
+      context: mysql
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/mysql:production
     volumes:
@@ -43,6 +47,7 @@ services:
     networks:
       - laravel
   portainer:
+    env_file: ../.env
     image: portainer/portainer
     container_name: "laravel_portainer"
     command: --templates http://templates/templates.json --host=unix:///var/run/docker.sock
@@ -53,29 +58,32 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   horizon:
+    env_file: ../.env
     build:
-      context: ./docker/horizon
+      context: horizon
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/horizon:production
     volumes:
-      - ./:/var/www/html
+      - ../:/var/www/html
     networks:
       - laravel
   cron:
+    env_file: ../.env
     build:
-      context: ./docker/cron
+      context: cron
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/cron:production
     volumes:
-      - ./:/var/www/html
+      - ../:/var/www/html
       - /tmp:/tmp
   node:
+    env_file: ../.env
     build:
-      context: ./docker/node
+      context: node
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/node:production
     volumes:
-      - ./:/var/www/html
+      - ../:/var/www/html
 networks:
   laravel:
     driver: "bridge"
