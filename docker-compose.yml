@@ -5,33 +5,33 @@ services:
     build:
       context: ./docker/nginx
       dockerfile: Dockerfile
-    image: lg1/nginx:production
+    image: laravel/nginx:production
     volumes:
       - ./:/var/www/html
     ports:
       - "8010:80"
     networks:
-      - lg1
+      - laravel
     depends_on:
       - php
   php:
     build:
       context: ./docker/php
       dockerfile: Dockerfile
-    image: lg1/php-fpm:production
+    image: laravel/php-fpm:production
     volumes:
       - ./:/var/www/html
     networks:
-      - lg1
+      - laravel
   redis:
     image: redis:alpine
     networks:
-      - lg1
+      - laravel
   mysql:
     build:
       context: ./docker/mysql
       dockerfile: Dockerfile
-    image: lg1/mysql:production
+    image: laravel/mysql:production
     volumes:
       - ./database/mysql:/var/lib/mysql
     environment:
@@ -41,13 +41,13 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - TZ=${TZ}
     networks:
-      - lg1
+      - laravel
   portainer:
     image: portainer/portainer
-    container_name: "lg1_portainer"
+    container_name: "laravel_portainer"
     command: --templates http://templates/templates.json --host=unix:///var/run/docker.sock
     networks:
-      - lg1
+      - laravel
     ports:
       - "9001:9000"
     volumes:
@@ -56,16 +56,16 @@ services:
     build:
       context: ./docker/horizon
       dockerfile: Dockerfile
-    image: lg1/horizon:production
+    image: laravel/horizon:production
     volumes:
       - ./:/var/www/html
     networks:
-      - lg1
+      - laravel
   cron:
     build:
       context: ./docker/cron
       dockerfile: Dockerfile
-    image: lg1/cron:production
+    image: laravel/cron:production
     volumes:
       - ./:/var/www/html
       - /tmp:/tmp
@@ -73,9 +73,9 @@ services:
     build:
       context: ./docker/node
       dockerfile: Dockerfile
-    image: lg1/node:production
+    image: laravel/node:production
     volumes:
       - ./:/var/www/html
 networks:
-  lg1:
+  laravel:
     driver: "bridge"
