@@ -10,7 +10,7 @@
 
 5. Run `docker-compose up -d --build` to start your project. This should be executed from the Laravel project's root directory.
 
-You can no visit your application in a browser at the WEB_PORT specified *(8010 by default)*
+You can now visit your application in a browser at the WEB_PORT specified *(8010 by default)*
 
 **ENVIRONMENT VARIABLES**
 
