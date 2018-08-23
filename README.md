@@ -1,4 +1,4 @@
-## Docker Build For Laravel
+## Docker Environment For Laravel
 
 1. Copy the `docker` directory to your Laravel project's root directory.
 2. Copy the `docker-compose.yml` to your Laravel project's root directory.
