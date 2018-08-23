@@ -2,10 +2,8 @@ version: '3'
 
 services:
   nginx:
-    env_file:
-      - ../.env
     build:
-      context: nginx
+      context: ./docker/nginx
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/nginx:production
     volumes:
@@ -17,10 +15,8 @@ services:
     depends_on:
       - php
   php:
-    env_file:
-      - ../.env
     build:
-      context: php
+      context: ./docker/php
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/php-fpm:production
     volumes:
@@ -28,16 +24,12 @@ services:
     networks:
       - laravel
   redis:
-    env_file:
-      - ../.env
     image: redis:alpine
     networks:
       - laravel
   mysql:
-    env_file:
-      - ../.env
     build:
-      context: mysql
+      context: ./docker/mysql
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/mysql:production
     volumes:
@@ -51,8 +43,6 @@ services:
     networks:
       - laravel
   portainer:
-    env_file:
-      - ../.env
     image: portainer/portainer
     container_name: "laravel_portainer"
     command: --templates http://templates/templates.json --host=unix:///var/run/docker.sock
@@ -63,10 +53,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   horizon:
-    env_file:
-      - ../.env
     build:
-      context: horizon
+      context: ./docker/horizon
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/horizon:production
     volumes:
@@ -74,20 +62,16 @@ services:
     networks:
       - laravel
   cron:
-    env_file:
-      - ../.env
     build:
-      context: cron
+      context: ./docker/cron
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/cron:production
     volumes:
       - ../:/var/www/html
       - /tmp:/tmp
   node:
-    env_file:
-      - ../.env
     build:
-      context: node
+      context: ./docker/node
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/node:production
     volumes:
