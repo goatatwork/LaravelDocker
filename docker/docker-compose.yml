@@ -2,7 +2,8 @@ version: '3'
 
 services:
   nginx:
-    env_file: ../.env
+    env_file:
+      - ../.env
     build:
       context: nginx
       dockerfile: Dockerfile
@@ -16,7 +17,8 @@ services:
     depends_on:
       - php
   php:
-    env_file: ../.env
+    env_file:
+      - ../.env
     build:
       context: php
       dockerfile: Dockerfile
@@ -26,12 +28,14 @@ services:
     networks:
       - laravel
   redis:
-    env_file: ../.env
+    env_file:
+      - ../.env
     image: redis:alpine
     networks:
       - laravel
   mysql:
-    env_file: ../.env
+    env_file:
+      - ../.env
     build:
       context: mysql
       dockerfile: Dockerfile
@@ -47,7 +51,8 @@ services:
     networks:
       - laravel
   portainer:
-    env_file: ../.env
+    env_file:
+      - ../.env
     image: portainer/portainer
     container_name: "laravel_portainer"
     command: --templates http://templates/templates.json --host=unix:///var/run/docker.sock
@@ -58,7 +63,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   horizon:
-    env_file: ../.env
+    env_file:
+      - ../.env
     build:
       context: horizon
       dockerfile: Dockerfile
@@ -68,7 +74,8 @@ services:
     networks:
       - laravel
   cron:
-    env_file: ../.env
+    env_file:
+      - ../.env
     build:
       context: cron
       dockerfile: Dockerfile
@@ -77,7 +84,8 @@ services:
       - ../:/var/www/html
       - /tmp:/tmp
   node:
-    env_file: ../.env
+    env_file:
+      - ../.env
     build:
       context: node
       dockerfile: Dockerfile
