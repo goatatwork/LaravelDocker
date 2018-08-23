@@ -16,7 +16,7 @@ You can now visit your application in a browser at the WEB_PORT specified *(8010
 
 The following are environment variables that you can include in your Laravel .env file to control certain aspects of the build process and the operation of your application. If these variables are not added to Laravel's `.env` file, the DEFAULT is used.
 
-| VARIABLE | DEFAULT | AFFECTS |
+| VARIABLE | DEFAULT | DESCRIPTION |
 | :---------: | :---------: | :--------- |
 | WEB_PORT | 8010 | The web interface port |
 | PORTAINER_PORT | 9001 | The Portainer port |
