@@ -1,8 +1,10 @@
 ## Docker Build For Laravel
 
 1. Copy the `docker` directory to your Laravel project's root directory.
-2. Add `/database/mysql` to your project's `.gitignore` file so that git won't track your database.
-3. From the `docker` directory, run `docker-compose up -d --build` to start your project.
+2. Copy the `docker-compose.yml` to your Laravel project's root directory.
+3. Add `/database/mysql` to your project's `.gitignore` file so that git won't track your database.
+4. If not present, the mysql container will create a database based on the `DB_` settings in `.env`, so make sure to configure your .env file before bringing services up.
+5. Run `docker-compose up -d --build` to start your project. This should be executed from the Laravel project's root directory.
 
 **ENVIRONMENT VARIABLES**
 
