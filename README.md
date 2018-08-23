@@ -10,6 +10,8 @@
 
 5. Run `docker-compose up -d --build` to start your project. This should be executed from the Laravel project's root directory.
 
+You can no visit your application in a browser at the WEB_PORT specified *(8010 by default)*
+
 **ENVIRONMENT VARIABLES**
 
 The following are environment variables that you can include in your Laravel .env file to control these settings. If these variables are not added to Laravel's `.env` file, the DEFAULT is used.
