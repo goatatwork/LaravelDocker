@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    image: ${BASE_TAG:-laravel}/nginx:production
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - ${WEB_PORT:-8010}:80
+    networks:
+      - laravel
+    depends_on:
+      - php
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    image: ${BASE_TAG:-laravel}/php-fpm:production
+    volumes:
+      - ../:/var/www/html
+    networks:
+      - laravel
+  redis:
+    image: redis:alpine
+    networks:
+      - laravel
+  mysql:
+    build:
+      context: ./docker/mysql
+      dockerfile: Dockerfile
+    image: ${BASE_TAG:-laravel}/mysql:production
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - TZ=${TZ:-America/Chicago}
+    networks:
+      - laravel
+  portainer:
+    image: portainer/portainer
+    container_name: "laravel_portainer"
+    command: --templates http://templates/templates.json --host=unix:///var/run/docker.sock
+    networks:
+      - laravel
+    ports:
+      - ${PORTAINER_PORT:-9001}:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  horizon:
+    build:
+      context: ./docker/horizon
+      dockerfile: Dockerfile
+    image: ${BASE_TAG:-laravel}/horizon:production
+    volumes:
+      - ../:/var/www/html
+    networks:
+      - laravel
+  cron:
+    build:
+      context: ./docker/cron
+      dockerfile: Dockerfile
+    image: ${BASE_TAG:-laravel}/cron:production
+    volumes:
+      - ../:/var/www/html
+      - /tmp:/tmp
+  node:
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+    image: ${BASE_TAG:-laravel}/node:production
+    volumes:
+      - ../:/var/www/html
+networks:
+  laravel:
+    driver: "bridge"
