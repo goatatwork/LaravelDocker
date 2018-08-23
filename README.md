@@ -14,7 +14,7 @@ You can now visit your application in a browser at the WEB_PORT specified *(8010
 
 **ENVIRONMENT VARIABLES**
 
-The following are environment variables that you can include in your Laravel .env file to control these settings. If these variables are not added to Laravel's `.env` file, the DEFAULT is used.
+The following are environment variables that you can include in your Laravel .env file to control certain aspects of the build process and the operation of your application. If these variables are not added to Laravel's `.env` file, the DEFAULT is used.
 
 | VARIABLE | DEFAULT | AFFECTS |
 | :---------: | :---------: | :--------- |
