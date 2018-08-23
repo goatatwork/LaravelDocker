@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/nginx:production
     volumes:
-      - ../:/var/www/html
+      - ./:/var/www/html
     ports:
       - ${WEB_PORT:-8010}:80
     networks:
@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/php-fpm:production
     volumes:
-      - ../:/var/www/html
+      - ./:/var/www/html
     networks:
       - laravel
   redis:
@@ -58,7 +58,7 @@ services:
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/horizon:production
     volumes:
-      - ../:/var/www/html
+      - ./:/var/www/html
     networks:
       - laravel
   cron:
@@ -67,7 +67,7 @@ services:
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/cron:production
     volumes:
-      - ../:/var/www/html
+      - ./:/var/www/html
       - /tmp:/tmp
   node:
     build:
@@ -75,7 +75,7 @@ services:
       dockerfile: Dockerfile
     image: ${BASE_TAG:-laravel}/node:production
     volumes:
-      - ../:/var/www/html
+      - ./:/var/www/html
 networks:
   laravel:
     driver: "bridge"
