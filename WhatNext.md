@@ -4,23 +4,23 @@ Now that the application is up and running, we need to get it ready. These are t
 
 There is a Horizon container, but Horizon isn't currently installed. To install it:
 
-`docker exec -it -u www-data stupidbot_php_1 composer require laravel/horizon`
+`docker exec -it -u www-data myapp_php_1 composer require laravel/horizon`
 
-`docker exec -it -u www-data stupidbot_php_1 php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"`
+`docker exec -it -u www-data myapp_php_1 php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"`
 
-`docker restart stupidbot_horizon_1`
+`docker restart myapp_horizon_1`
 
 ---
 
 `docker run -it --rm -v $(pwd):/var/www/html laravel/node:production npm install`
 
-`docker exec -it -u www-data stupidbot_php_1 composer require predis/predis`
+`docker exec -it -u www-data myapp_php_1 composer require predis/predis`
 
-`docker exec -it -u www-data stupidbot_php_1 composer require laravel/passport`
+`docker exec -it -u www-data myapp_php_1 composer require laravel/passport`
 
-`docker exec -it -u www-data stupidbot_php_1 php artisan migrate`
+`docker exec -it -u www-data myapp_php_1 php artisan migrate`
 
-`docker exec -it -u www-data stupidbot_php_1 php artisan passport:install`
+`docker exec -it -u www-data myapp_php_1 php artisan passport:install`
 
 In **User.php**, use the `HasApiTokens` trait.
 
@@ -91,9 +91,9 @@ In `config/auth.php`, swap out the `token` driver for the `passport` driver in t
 ],
 ```
 
-`docker exec -it -u www-data stupidbot_php_1 php artisan make:auth`
+`docker exec -it -u www-data myapp_php_1 php artisan make:auth`
 
-`docker exec -it -u www-data stupidbot_php_1 php artisan vendor:publish --tag=passport-components`
+`docker exec -it -u www-data myapp_php_1 php artisan vendor:publish --tag=passport-components`
 
 Add this to `resources/assets/js/app.js`:
 
@@ -123,3 +123,11 @@ Add the test database to `phpunit.xml`.
     <env name="DB_DATABASE" value="wtffood_testing"/>
 </php>
 ```
+
+---
+
+**Run `npm watch`**
+
+`docker run -it -v $(pwd):/var/www/html laravel/node:production npm install`
+
+If you set `BASE_TAG` in the `.env` before the build process, replace "laravel" with the value of `BASE_TAG`.
