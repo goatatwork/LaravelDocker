@@ -1,18 +1,48 @@
 ## Docker Environment For Laravel
 
 1. Copy the `docker` directory to your Laravel project's root directory.
+
 2. Copy the `docker-compose.yml` to your Laravel project's root directory.
+
 3. Add `/database/mysql` to your project's `.gitignore` file so that git won't track your database.
+
 4. Configure the Laravel `.env` file.
 
-    - When the mysql container is started, it will create a database with the same name, username, and password as what is configured in the `DB_` settings in the `.env` file. This is skipped if the database already exists.
-    - See the **Environment Variables** section below for other optional settings.
+    - set `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD`. When the **mysql** container is started, it will create this database, if it is not already present. Database files will be located in `/database/mysql` under the project root.
 
-5. Run `docker-compose up -d --build` to start your project. This should be executed from the Laravel project's root directory.
+        ```
+        DB_DATABASE=myappdb
+        DB_USERNAME=admin
+        DB_PASSWORD=secretpasswordtext
+        ```
+
+    - Set `DB_HOST` and `REDIS_host` to their respective service names found in `docker-compose.yml`.
+
+        ```
+        DB_HOST=mysql
+        REDIS_HOST=redis
+        ```
+
+    - Set all of the following to `redis`:
+
+        ```
+        BROADCAST_DRIVER=redis
+        CACHE_DRIVER=redis
+        SESSION_DRIVER=redis
+        QUEUE_DRIVER=redis
+        ```
+
+    - See the **ADDITIONAL ENVIRONMENT VARIABLES** section below for other optional settings.
+
+4. Any SQL commands you place into `docker/mysql/docker-entrypoint-initdb.d/createdb.sql` will be executed upon creation as well. This is a good place to have your `dbname_testing` database created *(optionally used by phpunit.xml for testing)*. There are examples in that file.
+
+6. Run `docker-compose up -d --build` to start your project. This should be executed from the Laravel project's root directory.
+
+---
 
 You can now visit your application in a browser at the WEB_PORT specified *(8010 by default)*
 
-**ENVIRONMENT VARIABLES**
+**ADDITIONAL ENVIRONMENT VARIABLES**
 
 The following are environment variables that you can include in your Laravel .env file to control certain aspects of the build process and the operation of your application. If these variables are not added to Laravel's `.env` file, the DEFAULT is used.
 
