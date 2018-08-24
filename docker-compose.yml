@@ -44,7 +44,7 @@ services:
       - laravel
   portainer:
     image: portainer/portainer
-    container_name: "laravel_portainer"
+    container_name: "${BASE_TAG:-laravel}_portainer"
     command: --templates http://templates/templates.json --host=unix:///var/run/docker.sock
     networks:
       - laravel
