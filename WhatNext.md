@@ -2,6 +2,16 @@
 
 Now that the application is up and running, we need to get it ready. These are the things I do immediately after installing.
 
+There is a Horizon container, but Horizon isn't currently installed. To install it:
+
+`docker exec -it -u www-data stupidbot_php_1 composer require laravel/horizon`
+
+`docker exec -it -u www-data stupidbot_php_1 php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"`
+
+`docker restart stupidbot_horizon_1`
+
+---
+
 `docker run -it --rm -v $(pwd):/var/www/html laravel/node:production npm install`
 
 `docker exec -it -u www-data stupidbot_php_1 composer require predis/predis`
