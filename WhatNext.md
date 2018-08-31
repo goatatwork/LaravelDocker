@@ -128,6 +128,6 @@ Add the test database to `phpunit.xml`.
 
 **Run `npm watch`**
 
-`docker run -it -v $(pwd):/var/www/html laravel/node:production npm install`
+`docker run -it -v $(pwd):/var/www/html laravel/node:production npm run watch`
 
 If you set `BASE_TAG` in the `.env` before the build process, replace "laravel" with the value of `BASE_TAG`.
