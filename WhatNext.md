@@ -120,7 +120,7 @@ Add the test database to `phpunit.xml`.
     <env name="CACHE_DRIVER" value="array"/>
     <env name="SESSION_DRIVER" value="array"/>
     <env name="QUEUE_DRIVER" value="sync"/>
-    <env name="DB_DATABASE" value="wtffood_testing"/>
+    <env name="DB_DATABASE" value="myapp_testing"/>
 </php>
 ```
 
