@@ -58,6 +58,6 @@ Here are examples of how each of these environment variables would be set in the
 ```
 WEB_PORT=8088
 PORTAINER_PORT=9002
-BASE_TAB=mycoolthing
+BASE_TAG=mycoolthing
 TZ=America/Denver
 ```
