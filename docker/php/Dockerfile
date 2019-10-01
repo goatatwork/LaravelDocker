@@ -6,12 +6,12 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
 
 RUN apt-get update \
-    && apt-get install -y curl zip unzip git mysql-client zlib1g-dev \
+    && apt-get install -y curl zip unzip git mysql-client zlib1g-dev libicu-dev libpng-dev \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN docker-php-ext-install pdo_mysql pcntl zip
+RUN docker-php-ext-install pdo_mysql pcntl zip intl bcmath gd
 
 RUN mkdir /var/www/.composer && chown www-data.www-data /var/www/.composer
 RUN mkdir /var/www/.config && chown www-data.www-data /var/www/.config
