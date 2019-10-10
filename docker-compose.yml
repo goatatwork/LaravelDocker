@@ -76,6 +76,40 @@ services:
     image: ${BASE_TAG:-laravel}/node:production
     volumes:
       - ./:/var/www/html
+
+#  Production
+#  traefik:
+#    container_name: ${APP_SUBDOMAIN}_traefik
+#    image: traefik:1.7-alpine
+#    labels:
+#      - traefik.backend=${APP_SUBDOMAIN}_traefik
+#      - traefik.frontend.rule=Host:${APP_SUBDOMAIN}.${APP_DOMAIN};PathPrefixStrip:/traefik
+#      - traefik.port=8080
+#    networks:
+#      - sharkbot_proxynet
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - ./system/traefik/traefik.toml:/traefik.toml
+#      - ./system/traefik/acme.json:/acme.json
+#    ports:
+#      - 80:80
+#      - 443:443
+
+#  Local dev
+#  traefik:
+#    container_name: ${APP_SUBDOMAIN}_traefik
+#    image: traefik:1.7-alpine
+#    labels:
+#      - traefik.backend=${APP_SUBDOMAIN}_traefik
+#      - traefik.frontend.rule=Host:${APP_SUBDOMAIN}.${APP_DOMAIN};PathPrefixStrip:/traefik
+#      - traefik.port=8080
+#    networks:
+#      - sharkbot_proxynet
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - ./docker/traefik/traefik-localdev.toml:/traefik.toml
+#    ports:
+#      - 80:80
 networks:
   laravel:
     driver: "bridge"
