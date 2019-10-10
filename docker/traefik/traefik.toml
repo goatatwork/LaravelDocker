@@ -1,0 +1,33 @@
+logLevel = "INFO"
+
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+    [entryPoints.dashboard]
+    address = ":8080"
+    [entryPoints.dashboard.auth]
+        [entryPoints.dashboard.auth.basic]
+            users = ["admin:$apr1$apGsrrXUt8$34W8Hek/BZ7U0kCdg6Spj0"]
+    [entryPoints.http]
+        address = ":80"
+            [entryPoints.http.redirect]
+                entryPoint = "https"
+    [entryPoints.https]
+        address = ":443"
+            [entryPoints.https.tls]
+
+[api]
+entrypoint="dashboard"
+
+[acme]
+email = "some@email.address"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+  [acme.httpChallenge]
+  entryPoint = "http"
+
+[docker]
+domain = ""
+watch = true
+network = "manually_creted_docker_proxynet"
